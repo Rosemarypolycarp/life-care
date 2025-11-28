@@ -1,0 +1,210 @@
+import React, { useEffect, useState } from "react";
+import { toast } from "react-toastify";
+
+const AppointmentForm = () => {
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [email, setEmail] = useState("");
+  const [phone, setPhone] = useState("");
+  const [aadhar, setAadhar] = useState("");
+  const [dob, setDob] = useState("");
+  const [gender, setGender] = useState("");
+  const [appointmentDate, setAppointmentDate] = useState("");
+  const [department, setDepartment] = useState("Pediatrics");
+  const [doctorFirstName, setDoctorFirstName] = useState("");
+  const [doctorLastName, setDoctorLastName] = useState("");
+  const [address, setAddress] = useState("");
+  const [hasVisited, setHasVisited] = useState(false);
+
+  const departmentsArray = [
+    "Pediatrics",
+    "Orthopedics",
+    "Cardiology",
+    "Neurology",
+    "Oncology",
+    "Radiology",
+    "Physical Therapy",
+    "Dermatology",
+    "ENT",
+  ];
+
+  const [doctors, setDoctors] = useState([]);
+
+  useEffect(() => {
+    const storedDoctors = JSON.parse(localStorage.getItem("doctors")) || [];
+    setDoctors(storedDoctors);
+  }, []);
+
+  const handleAppointment = (e) => {
+    e.preventDefault();
+
+    const existingAppointments =
+      JSON.parse(localStorage.getItem("appointments")) || [];
+
+    const newAppointment = {
+      firstName,
+      lastName,
+      email,
+      phone,
+      aadhar,
+      dob,
+      gender,
+      appointment_date: appointmentDate,
+      department,
+      doctor_firstName: doctorFirstName,
+      doctor_lastName: doctorLastName,
+      hasVisited,
+      address,
+      createdAt: new Date().toISOString(),
+    };
+
+    existingAppointments.push(newAppointment);
+    localStorage.setItem("appointments", JSON.stringify(existingAppointments));
+
+    toast.success("Appointment booked successfully!");
+
+    setFirstName("");
+    setLastName("");
+    setEmail("");
+    setPhone("");
+    setAadhar("");
+    setDob("");
+    setGender("");
+    setAppointmentDate("");
+    setDepartment("Pediatrics");
+    setDoctorFirstName("");
+    setDoctorLastName("");
+    setHasVisited(false);
+    setAddress("");
+  };
+
+  return (
+    <div className="container form-component appointment-form">
+      <h2>Appointment</h2>
+      <form onSubmit={handleAppointment}>
+        <div>
+          <input
+            type="text"
+            placeholder="First Name"
+            value={firstName}
+            onChange={(e) => setFirstName(e.target.value)}
+          />
+          <input
+            type="text"
+            placeholder="Last Name"
+            value={lastName}
+            onChange={(e) => setLastName(e.target.value)}
+          />
+        </div>
+
+        <div>
+          <input
+            type="text"
+            placeholder="Email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+          />
+          <input
+            type="number"
+            placeholder="Mobile"
+            value={phone}
+            onChange={(e) => setPhone(e.target.value)}
+          />
+        </div>
+
+        <div>
+          <input
+            type="number"
+            placeholder="Aadhar Number"
+            value={aadhar}
+            onChange={(e) => setAadhar(e.target.value)}
+          />
+          <input
+            type="date"
+            placeholder="Date of Birth"
+            value={dob}
+            onChange={(e) => setDob(e.target.value)}
+          />
+        </div>
+
+        <div>
+          <select value={gender} onChange={(e) => setGender(e.target.value)}>
+            <option value="">Select Gender</option>
+            <option value="Male">Male</option>
+            <option value="Female">Female</option>
+            <option value="Others">Others</option>
+          </select>
+
+          <input
+            type="date"
+            placeholder="Appointment Date"
+            value={appointmentDate}
+            onChange={(e) => setAppointmentDate(e.target.value)}
+          />
+        </div>
+
+        <div>
+          <select
+            value={department}
+            onChange={(e) => {
+              setDepartment(e.target.value);
+              setDoctorFirstName("");
+              setDoctorLastName("");
+            }}
+          >
+            {departmentsArray.map((depart, index) => (
+              <option value={depart} key={index}>
+                {depart}
+              </option>
+            ))}
+          </select>
+
+          <select
+            value={`${doctorFirstName} ${doctorLastName}`}
+            onChange={(e) => {
+              const [firstName, lastName] = e.target.value.split(" ");
+              setDoctorFirstName(firstName);
+              setDoctorLastName(lastName);
+            }}
+          >
+            <option value="">Select Doctor</option>
+            {doctors
+              .filter((d) => d.doctrDptmnt === department)
+              .map((doc, i) => (
+                <option key={i} value={`${doc.firstName} ${doc.lastName}`}>
+                  {doc.firstName} {doc.lastName}
+                </option>
+              ))}
+          </select>
+        </div>
+
+        <textarea
+          rows="10"
+          placeholder="Address"
+          value={address}
+          onChange={(e) => setAddress(e.target.value)}
+        />
+
+        <div
+          style={{
+            gap: "10px",
+            justifyContent: "flex-end",
+            flexDirection: "row",
+          }}
+        >
+          <p>Have you visited before?</p>
+          <input
+            type="checkbox"
+            checked={hasVisited}
+            onChange={(e) => setHasVisited(e.target.checked)}
+            style={{ flex: "none", width: "25px" }}
+          />
+        </div>
+
+        <button type="submit">Get Appointment</button>
+      </form>
+    </div>
+  );
+};
+
+export default AppointmentForm;
