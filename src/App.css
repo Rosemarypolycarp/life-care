@@ -9,6 +9,7 @@
 body {
   background: white;
 }
+
 .loading-overlay {
   position: fixed;
   margin: auto;
@@ -42,40 +43,40 @@ body {
 p,
 span,
 a {
-  font-size: 20px;
+  font-size: px16;
 }
 h1 {
-  font-size: 36px;
+  font-size: 30px;
   font-weight: 900;
 }
 h1 {
-  font-size: 36px;
+  font-size: 30px;
   font-weight: 900;
 }
 h2 {
-  font-size: 32px;
-  font-weight: 900;
-}
-h3 {
   font-size: 28px;
   font-weight: 900;
 }
-h4 {
+h3 {
   font-size: 24px;
+  font-weight: 900;
+}
+h4 {
+  font-size: 20px;
   font-weight: 900;
 }
 h5,
 h6 {
-  font-size: 24px;
+  font-size: 20px;
   font-weight: 700;
 }
 @media (max-width: 1186px) {
   h1 {
-    font-size: 32px;
+    font-size: 28px;
     font-weight: 900;
   }
   h2 {
-    font-size: 30px;
+    font-size: 26px;
     font-weight: 900;
   }
 }
@@ -104,11 +105,11 @@ h6 {
 .hero .banner h1 {
   letter-spacing: 2px;
   word-spacing: 5px;
-  font-size: 40px;
+  font-size: 32px;
 }
 .hero .banner p {
   color: #111;
-  letter-spacing: 2px;
+  letter-spacing: 1.3px;
 }
 .hero .banner span {
   position: absolute;
@@ -120,7 +121,7 @@ h6 {
   display: flex;
   justify-content: center;
   flex-direction: column;
-  gap: 50px;
+  gap: 45px;
 }
 .hero .banner:last-child {
   display: flex;
@@ -171,7 +172,7 @@ h6 {
 .form-component h2 {
   color: gray;
   letter-spacing: 4px;
-  margin-bottom: 30px;
+  margin-bottom: 25px;
 }
 .form-component h4 {
   color: gray;
@@ -337,41 +338,54 @@ button{
   }
 }
 footer {
-  padding-bottom: 30px !important;
+  padding-bottom: 20px; 
 }
+
 footer hr {
   margin-bottom: 30px;
 }
+
 footer .content {
   display: flex;
   gap: 20px;
 }
+
 footer .content div {
   flex: 1;
 }
+
 footer .content div:nth-child(3) {
   flex: 2;
 }
+
 footer .content div h4 {
   font-weight: 700;
   margin-bottom: 20px;
+  font-size: 16px;
 }
+
 footer .content div ul {
   display: flex;
   flex-direction: column;
   gap: 10px;
 }
+
 footer .content div ul a {
   color: #000;
   text-decoration: none;
+  font-size: 14px; 
 }
+
 footer .content div ul a:hover {
   color: #1f4e8c;
   transition: 0.3s;
 }
+
 footer .content div ul li span {
   color: gray;
+  font-size: 14px;
 }
+
 footer .content div ul li span:first-child {
   width: 150px;
   display: inline-block;
@@ -383,14 +397,17 @@ footer .content div:last-child div {
   gap: 12px;
   margin-bottom: 10px;
 }
+
 footer .content div:last-child div svg {
-  font-size: 20px;
+  font-size: 10px;
 }
+
 @media (max-width: 1135px) {
   footer .content {
     flex-wrap: wrap;
     justify-content: space-between;
   }
+
   footer .content div,
   footer .content div:nth-child(3) {
     flex: none;
@@ -398,15 +415,20 @@ footer .content div:last-child div svg {
     margin-bottom: 30px;
   }
 }
+
+
 @media (max-width: 900px) {
   footer {
-    padding-bottom: 0 !important;
+    padding-bottom: 10px; 
   }
+
   footer .content div,
   footer .content div:nth-child(3) {
     width: 100%;
   }
 }
+
+
 @media (max-width: 390px) {
   footer .content div:nth-child(3) ul li {
     display: flex;
@@ -414,10 +436,12 @@ footer .content div:last-child div svg {
   }
 }
 
+
 footer div:last-child p {
   text-align: center;
-
-  flex: 1;
+  font-size: 14px;
+  color: gray;
+  margin-top: 10px;
 }
 .social-icons {
   padding-top: 10px;
@@ -479,7 +503,7 @@ footer div:last-child p {
   font-weight: 700;
 }
 
-/**********************************************************************************************************************/
+
 nav {
   display: flex;
   width: 100%;

@@ -4,7 +4,8 @@ import { Link, Navigate, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 
 const Register = () => {
-  const { isAuthenticated, setIsAuthenticated } = useContext(Context);
+  const { isAuthenticated, setIsAuthenticated, setUser } = useContext(Context);
+
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
@@ -19,9 +20,35 @@ const Register = () => {
   const handleRegister = (e) => {
     e.preventDefault();
 
+   
+    if (!firstName || !lastName || !email || !phone || !password || !dob || !aadhar || !gender) {
+      toast.error("All fields are required!");
+      return;
+    }
+
+    if (!email.includes("@")) {
+      toast.error("Enter a valid email address!");
+      return;
+    }
+
+    if (!/^\d{11}$/.test(phone)) {
+      toast.error("Phone number must be 11 digits");
+      return;
+    }
+
+    if (password.length < 6) {
+      toast.error("Password must be at least 6 characters");
+      return;
+    }
+
+    if (!/^\d{12}$/.test(aadhar)) {
+      toast.error("Aadhar number must be 12 digits");
+      return;
+    }
+
     const existingUsers = JSON.parse(localStorage.getItem("users")) || [];
 
-    // Check if email already exists
+  
     const userExists = existingUsers.find((u) => u.email === email);
 
     if (userExists) {
@@ -34,15 +61,18 @@ const Register = () => {
       lastName,
       email,
       phone,
-      password,
-      gender,
-      aadhar,
       dob,
+      aadhar,
+      gender,
+      password, 
       role: "Patient",
     };
 
     existingUsers.push(newUser);
     localStorage.setItem("users", JSON.stringify(existingUsers));
+
+    localStorage.setItem("loggedInUser", JSON.stringify(newUser));
+    setUser(newUser);
 
     toast.success("Registration successful!");
     setIsAuthenticated(true);
@@ -50,8 +80,9 @@ const Register = () => {
   };
 
   if (isAuthenticated) {
-    return <Navigate to={"/"} />;
+    return <Navigate to="/" />;
   }
+
   return (
     <div className="container form-component register-form">
       <h2>Sign Up</h2>
@@ -86,7 +117,7 @@ const Register = () => {
             onChange={(e) => setEmail(e.target.value)}
           />
           <input
-            type="number"
+            type="text"
             value={phone}
             placeholder="Phone"
             onChange={(e) => setPhone(e.target.value)}
@@ -95,7 +126,7 @@ const Register = () => {
 
         <div>
           <input
-            type="number"
+            type="text"
             value={aadhar}
             placeholder="Aadhar Number"
             onChange={(e) => setAadhar(e.target.value)}
@@ -132,13 +163,11 @@ const Register = () => {
           }}
         >
           <p style={{ marginBottom: 0 }}>Already Registered?</p>
-          <Link
-            to={"/login"}
-            style={{ textDecoration: "none", alignItems: "center" }}
-          >
+          <Link to="/login" style={{ textDecoration: "none" }}>
             Login Now
           </Link>
         </div>
+
         <div style={{ justifyContent: "center", alignItems: "center" }}>
           <button type="submit">Register</button>
         </div>

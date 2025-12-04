@@ -10,26 +10,27 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Navbar from "./components/Navbar";
 import { Context } from "./main";
-import Footer from "./components/footer";
-import Loading from "./components/loading";
+import Footer from "./components/Footer";
+import Loading from "./components/Loading";
 
-
-//life care App Entry
 const App = () => {
   const { isAuthenticated, setIsAuthenticated, setUser } = useContext(Context);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    if (!localStorage.getItem("doctors")) {
-      const sampleDoctors = [
-        { firstName: "John", lastName: "Doe", doctrDptmnt: "Pediatrics" },
-        { firstName: "Sarah", lastName: "Lee", doctrDptmnt: "Cardiology" },
-        { firstName: "Mark", lastName: "Paul", doctrDptmnt: "Orthopedics" },
-      ];
+  const existingDoctors = localStorage.getItem("doctors");
 
-      localStorage.setItem("doctors", JSON.stringify(sampleDoctors));
-    }
-  }, []);
+
+  if (!existingDoctors) {
+    const sampleDoctors = [
+      { id: 1, firstName: "John", lastName: "Doe", doctrDptmnt: "Pediatrics" },
+      { id: 2, firstName: "Sarah", lastName: "Lee", doctrDptmnt: "Cardiology" },
+      { id: 3, firstName: "Mark", lastName: "Paul", doctrDptmnt: "Orthopedics" },
+    ];
+
+    localStorage.setItem("doctors", JSON.stringify(sampleDoctors));
+  }
+}, []);
 
   useEffect(() => {
     const savedUser = localStorage.getItem("loggedInUser");
