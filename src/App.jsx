@@ -14,8 +14,8 @@ import Footer from "./components/Footer";
 import Loading from "./components/Loading";
 
 const App = () => {
-  const { isAuthenticated, setIsAuthenticated, setUser } = useContext(Context);
-  const [loading, setLoading] = useState(true);
+ const { isAuthenticated, setIsAuthenticated, setUser } = useContext(Context);
+const [loading, setLoading] = useState(true);
 
   useEffect(() => {
   const existingDoctors = localStorage.getItem("doctors");
@@ -47,8 +47,8 @@ const App = () => {
   }, []);
 
   if (loading) {
-    return <Loading />;
-  }
+  return <Loading />;
+}
 
   return (
     <>
